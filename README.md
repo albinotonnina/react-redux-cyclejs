@@ -1,4 +1,4 @@
-# React app boilerplate 2018
+# Deltagraph
 
 ## What you get
 * 📦 [Parcel bundler](https://parceljs.org/)
