@@ -1,5 +1,5 @@
 {
-  "name": "deltagraph",
+  "name": "app",
   "version": "1.0.0",
   "main": "index.js",
   "license": "MIT",
@@ -11,11 +11,14 @@
     "eslint": "eslint ./src"
   },
   "dependencies": {
+    "babel-plugin-dynamic-import-node": "^1.2.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-preset-env": "^1.6.1",
     "babel-preset-react": "^6.24.1",
     "parcel-bundler": "^1.4.1",
     "prop-types": "^15.6.0",
     "react": "^16.2.0",
+    "react-broadcast": "^0.6.1",
     "react-dom": "^16.2.0",
     "styled-components": "^2.4.0"
   },
