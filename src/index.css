@@ -7,7 +7,7 @@ body {
 }
 
 body {
-font-family: Arial;  
+  font-family: Montserrat,Helvetica Neue,Helvetica,arial,sans-serif;
 }
 
 h1 {
@@ -16,9 +16,16 @@ h1 {
 
 #app{
   height: 100%;
+  overflow: scroll;
 }
 
-#app:before {
+
+#background{
+  height: 100%;
+  overflow: scroll;
+}
+
+#background:before {
   content: '';
   background-image: url('http://c8.alamy.com/comp/DY553G/portrait-of-young-businesswoman-looking-out-of-office-window-DY553G.jpg');
   background-size: cover;
@@ -26,6 +33,8 @@ h1 {
   height: 100%;
   width: 100%;
   position: absolute;
+  top:0;
   z-index: -1;
   opacity: 0.4;
+
 }
