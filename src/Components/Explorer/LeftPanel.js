@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc'
 import {ListContainer, ListItem, ListToolbar} from '../UI'
 import List from 'react-virtualized/dist/commonjs/List'
+import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 
 const itemHeight = ListItem.itemHeight
 
@@ -16,7 +17,7 @@ const SortableItem = SortableElement(({index, style, value}) => {
 
 class VirtualList extends React.Component {
   render() {
-    const {items} = this.props
+    const {items, sizes} = this.props
 
     return (
       <List
@@ -29,8 +30,8 @@ class VirtualList extends React.Component {
           return <SortableItem key={id} index={index} value={name} style={style} />
         }}
         rowCount={items.length}
-        width={600}
-        height={600}
+        width={sizes.width}
+        height={sizes.height}
       />
     )
   }
@@ -74,47 +75,18 @@ class LeftPanel extends React.Component {
           <ListToolbar>
             <div>Sort, Group</div>
           </ListToolbar>
-          <SortableList
-            ref={instance => {
-              this.SortableList = instance
-            }}
-            items={documents}
-            onSortEnd={this.onSortEnd}
-          />
-        </ListContainer>
-      )) ||
-      'Loading'
-    )
-  }
-}
-
-class _LeftPanel extends React.Component {
-  static propTypes = {
-    documents: PropTypes.array
-  }
-
-  render() {
-    const {documents} = this.props
-
-    return (
-      (documents && (
-        <ListContainer>
-          <ListToolbar>
-            <div>Sort, Group</div>
-          </ListToolbar>
-
-          <List
-            height={500}
-            noRowsRenderer={({index, style}) => <div>no render</div>}
-            rowCount={documents.length}
-            rowHeight={itemHeight}
-            rowRenderer={({index, style}) => (
-              <ListItem key={index} style={style}>
-                {documents[index].name}, Row: #{index}
-              </ListItem>
+          <AutoSizer>
+            {({height, width}) => (
+              <SortableList
+                ref={instance => {
+                  this.SortableList = instance
+                }}
+                items={documents}
+                sizes={{width, height}}
+                onSortEnd={this.onSortEnd}
+              />
             )}
-            width={600}
-          />
+          </AutoSizer>
         </ListContainer>
       )) ||
       'Loading'

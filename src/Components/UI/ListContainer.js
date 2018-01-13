@@ -2,7 +2,9 @@ import styled from 'styled-components'
 
 const itemHeight = 96
 
-const ListContainer = styled.div``
+const ListContainer = styled.div`
+  height: 100%;
+`
 
 ListContainer.displayName = 'ListContainer'
 
