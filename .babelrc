@@ -1,4 +1,4 @@
 {
-  "presets": ["env", "react"],
+  "presets": ["env", "react", "es2017"],
   "plugins": [["transform-class-properties", {"spec": true}], "dynamic-import-node"]
 }
