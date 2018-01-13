@@ -39,17 +39,15 @@ class ExplorerLayout extends React.Component {
 export class ExplorerProvider extends React.Component {
   state = {loading: true}
 
-  fetchJoke = () => {
-    fetch('http://api.icndb.com/jokes/random')
-      .then(res => res.json())
-      .then(
-        resp => this.setState({loading: false, joke: resp.value.joke}),
-        error => this.setState({loading: false, error})
-      )
+  fetchDocuments = async () => {
+    var response = await fetch('/api/documents')
+    var documents = await response.json()
+
+    this.setState({loading: false, documents: documents})
   }
 
   componentDidMount() {
-    this.fetchJoke()
+    this.fetchDocuments()
   }
 
   render() {
