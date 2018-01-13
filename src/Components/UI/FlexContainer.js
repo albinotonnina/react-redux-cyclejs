@@ -12,6 +12,6 @@ const FlexItem = styled.div`
   flex: ${props => `${props.grow ? 1 : 0} ${props.shrink ? 1 : 0} ${props.basis ? props.basis : 'auto'}`};
   max-width: ${props => `${!props.grow && !props.shrink && props.basis ? props.basis : 'auto'}`};
 `
-FlexItem.displayName = 'Item'
+FlexItem.displayName = 'FlexItem'
 
 export {FlexContainer, FlexItem}
