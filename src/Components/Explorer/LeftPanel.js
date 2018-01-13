@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import VirtualList from 'react-tiny-virtual-list'
 
 class LeftPanel extends React.Component {
   static propTypes = {
@@ -8,9 +9,23 @@ class LeftPanel extends React.Component {
 
   render() {
     const {documents} = this.props
-    console.log('render left with props: ', this.props)
-
-    return (documents && documents.map(doc => <div key={doc.id}>{doc.name}</div>)) || 'Loading'
+console.log(documents);
+    return (
+      (documents && (
+        <VirtualList
+          width="100%"
+          height={600}
+          itemCount={documents.length}
+          itemSize={50} // Also supports variable heights (array or function getter)
+          renderItem={({index, style}) => (
+            <div key={index} style={style}>
+              Letter: {documents[index].name}, Row: #{index}
+            </div>
+          )}
+        />
+      )) ||
+      'Loading'
+    )
   }
 }
 

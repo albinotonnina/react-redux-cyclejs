@@ -10,7 +10,7 @@
     "build": "parcel build src/index.html --no-cache --public-url ./ ",
     "eslint": "eslint ./src",
     "dev": "npm run api-server | npm run serve",
-    "api-server": "json-server --watch config/fake-api/db.json",
+    "api-server": "json-server --watch config/fake-api/db.js",
     "serve": "node server.js"
   },
   "dependencies": {
@@ -25,6 +25,7 @@
     "react": "^16.2.0",
     "react-broadcast": "^0.6.1",
     "react-dom": "^16.2.0",
+    "react-tiny-virtual-list": "^2.1.4",
     "styled-components": "^2.4.0"
   },
   "devDependencies": {
@@ -47,7 +48,6 @@
     "json-server": "^0.12.1",
     "prettier": "^1.10.2"
   },
-  
   "jest": {
     "collectCoverage": true,
     "coverageReporters": [
