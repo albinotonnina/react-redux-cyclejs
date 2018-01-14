@@ -1,22 +1,12 @@
 import React from 'react'
-import PropTypes from 'prop-types'
+
 import {SortableContainer, SortableElement, SortableHandle, arrayMove} from 'react-sortable-hoc'
-import {ListContainer, ListItem, ListToolbar} from '../UI'
+import DocItem, {DocItemHeight} from './DocItem'
+import {ListContainer, ListToolbar} from '../UI'
 import List from 'react-virtualized/dist/commonjs/List'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 
-const itemHeight = ListItem.itemHeight
-
-const DragHandle = SortableHandle(() => <span> :: </span>)
-
-const SortableItem = SortableElement(({index, style, value}) => {
-  return (
-    <ListItem key={index} style={style}>
-      <DragHandle />
-      {value}
-    </ListItem>
-  )
-})
+const itemHeight = DocItemHeight
 
 class VirtualList extends React.Component {
   render() {
@@ -30,7 +20,7 @@ class VirtualList extends React.Component {
         rowHeight={itemHeight}
         rowRenderer={({index, style}) => {
           const {name, id} = items[index]
-          return <SortableItem key={id} index={index} value={name} style={style} />
+          return <SortableItem key={id} index={index} data={items[index]} style={style} />
         }}
         rowCount={items.length}
         width={sizes.width}
@@ -46,6 +36,27 @@ class VirtualList extends React.Component {
  * you *must* pass in {withRef: true} as the second param. Refs are opt-in.
  */
 const SortableList = SortableContainer(VirtualList, {withRef: true})
+const SortableItem = SortableElement(DocItem)
+
+const ListLayout = ({documents, onSortEnd, doRef}) => (
+  <ListContainer>
+    <ListToolbar>
+      <div>Sort, Group</div>
+    </ListToolbar>
+    <AutoSizer>
+      {({height, width}) => (
+        <SortableList
+          ref={doRef}
+          items={documents}
+          useDragHandle={true}
+          helperClass="sorting"
+          sizes={{width, height}}
+          onSortEnd={onSortEnd}
+        />
+      )}
+    </AutoSizer>
+  </ListContainer>
+)
 
 class LeftPanel extends React.Component {
   state = {
@@ -69,30 +80,19 @@ class LeftPanel extends React.Component {
       instance.forceUpdate()
     }
   }
+
   render() {
     const {documents} = this.props
 
     return (
       (documents && (
-        <ListContainer>
-          <ListToolbar>
-            <div>Sort, Group</div>
-          </ListToolbar>
-          <AutoSizer>
-            {({height, width}) => (
-              <SortableList
-                ref={instance => {
-                  this.SortableList = instance
-                }}
-                items={documents}
-                useDragHandle={true}
-                helperClass="sorting"
-                sizes={{width, height}}
-                onSortEnd={this.onSortEnd}
-              />
-            )}
-          </AutoSizer>
-        </ListContainer>
+        <ListLayout
+          documents={documents}
+          onSortEnd={this.onSortEnd}
+          doRef={instance => {
+            this.SortableList = instance
+          }}
+        />
       )) ||
       'Loading'
     )

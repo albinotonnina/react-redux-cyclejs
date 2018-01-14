@@ -36,7 +36,7 @@ class ExplorerLayout extends React.Component {
   }
 }
 
-export class ExplorerProvider extends React.Component {
+class ExplorerProvider extends React.Component {
   state = {loading: true}
 
   fetchDocuments = async () => {
