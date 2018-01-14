@@ -1,15 +1,18 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import {SortableContainer, SortableElement, arrayMove} from 'react-sortable-hoc'
+import {SortableContainer, SortableElement, SortableHandle, arrayMove} from 'react-sortable-hoc'
 import {ListContainer, ListItem, ListToolbar} from '../UI'
 import List from 'react-virtualized/dist/commonjs/List'
 import AutoSizer from 'react-virtualized/dist/commonjs/AutoSizer'
 
 const itemHeight = ListItem.itemHeight
 
+const DragHandle = SortableHandle(() => <span> :: </span>)
+
 const SortableItem = SortableElement(({index, style, value}) => {
   return (
     <ListItem key={index} style={style}>
+      <DragHandle />
       {value}
     </ListItem>
   )
@@ -82,6 +85,8 @@ class LeftPanel extends React.Component {
                   this.SortableList = instance
                 }}
                 items={documents}
+                useDragHandle={true}
+                helperClass="sorting"
                 sizes={{width, height}}
                 onSortEnd={this.onSortEnd}
               />

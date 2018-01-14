@@ -26,6 +26,9 @@ const ListItem = styled.div`
   display: flex;
   align-items: center;
   height: ${itemHeight}px;
+  &.sorting {
+    box-shadow: 0 1px 4px 1px rgba(0, 0, 0, 0.2);
+  }
 `
 
 ListItem.displayName = 'ListItem'
