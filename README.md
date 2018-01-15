@@ -1,5 +1,7 @@
 # Declarative + reactive app using React, Redux, Cycle.js
 
+[![Greenkeeper badge](https://badges.greenkeeper.io/albinotonnina/react-redux-cyclejs.svg)](https://greenkeeper.io/)
+
 ## Instructions
 
 `yarn` to install
