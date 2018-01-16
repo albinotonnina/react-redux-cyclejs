@@ -1,11 +1,3 @@
-* {
-  box-sizing: border-box;
-}
-
-*:focus {
-  outline: none;
-}
-
 html,
 body {
   width: 100%;
@@ -15,7 +7,7 @@ body {
 }
 
 body {
-  font-family: Montserrat,Helvetica Neue,Helvetica,arial,sans-serif;
+font-family: Arial;  
 }
 
 h1 {
@@ -24,29 +16,4 @@ h1 {
 
 #app{
   height: 100%;
-  overflow: scroll;
-}
-
-
-#background{
-  height: 100vh;
-  overflow: scroll;
-  position: fixed;
-  width: 100vw;
-  top: 0;
-  z-index: -1;
-}
-
-#background:before {
-  content: '';
-  background-image: url('http://c8.alamy.com/comp/DY553G/portrait-of-young-businesswoman-looking-out-of-office-window-DY553G.jpg');
-  background-size: cover;
-  filter: blur(15px);
-  height: 100%;
-  width: 100%;
-  position: absolute;
-  top:0;
-  z-index: -1;
-  opacity: 0.4;
-
 }

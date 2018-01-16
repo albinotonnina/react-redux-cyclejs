@@ -1,3 +1,19 @@
-# React-layout-broadcast-context
+# Declarative + reactive app using React, Redux, Cycle.js
 
-Boilerplate from https://github.com/albinotonnina/react-parcel-jest-babel-boilerplate-2018
+## Instructions
+
+`yarn` to install
+
+`yarn start` to start a dev server
+
+`yarn build` to build the app
+
+`yarn test` to launch tests
+
+`yarn test:updateSnapshots` to update all the snapshots
+
+`yarn eslint` to launch eslint
+
+## License
+
+MIT

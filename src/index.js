@@ -1,20 +1,27 @@
 import React from 'react'
-import {render} from 'react-dom'
-import WebFont from 'webfontloader'
-import App from './App'
-require('babel-polyfill')
+import ReactDOM from 'react-dom'
+import {Provider} from 'react-redux'
+import {Router, Route, browserHistory, IndexRoute} from 'react-router'
+import {syncHistoryWithStore} from 'react-router-redux'
+import 'semantic-ui-css/semantic.min.css';
+import configureStore from './configureStore'
+import App from './containers/App'
+import UserSearch from './containers/UserSearch'
+import ReposByUser from './containers/ReposByUser'
+import Admin from './containers/Admin'
 
-const waitForWebfonts = function(fonts, callback) {
-  WebFont.load({
-    google: {
-      families: fonts
-    },
-    active: callback
-  })
-}
+const store = configureStore()
+const history = syncHistoryWithStore(browserHistory, store)
 
-const boot = Component => {
-  render(<Component foo="bar" />, document.getElementById('app'))
-}
-
-window.onload = waitForWebfonts(['Montserrat:400,100,300,700,900'], () => boot(App))
+ReactDOM.render(
+  <Provider store={store}>
+    <Router history={history}>
+      <Route path="/" component={App}>
+        <IndexRoute component={UserSearch} />
+        <Route path="repos/:user" component={ReposByUser} />
+        <Route path="admin" component={Admin} />
+      </Route>
+    </Router>
+  </Provider>,
+  document.querySelector('#app')
+)
