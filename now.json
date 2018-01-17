@@ -1,0 +1,10 @@
+{
+  "alias": "deltagraph",
+  "scripts": {
+    "start": "node server/index.js"
+  },
+  "env": {
+    "NODE_ENV": "production",
+    "API_PROXY": "http://domain.com"
+  }
+}
