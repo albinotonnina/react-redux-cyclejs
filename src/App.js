@@ -2,8 +2,9 @@ import React from 'react'
 import PropTypes from 'prop-types'
 import {Switch, Route} from 'react-router-dom'
 import styled from 'styled-components'
-import UserSearch from './UserSearch'
-import ReposByUser from './ReposByUser'
+
+import ReposByUser from './scenes/SearchRepo/containers/ReposByUser'
+import UserSearch from './scenes/SearchRepo/containers/UserSearch'
 
 const Container = styled.main`
   display: flex;

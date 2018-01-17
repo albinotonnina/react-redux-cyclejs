@@ -2,7 +2,6 @@ import React from 'react'
 import PropTypes from 'prop-types'
 
 const Repos = ({repos, user}) => {
-
   return (
     <ul>
       {repos.length ? (

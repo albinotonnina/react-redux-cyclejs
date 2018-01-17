@@ -1,10 +1,10 @@
 {
-  "alias": "deltagraph",
+  "name": "rrce",
+  "alias": "react-redux-cycles-exercise",
   "scripts": {
-    "start": "node server/index.js"
+    "start": "serve ."
   },
-  "env": {
-    "NODE_ENV": "production",
-    "API_PROXY": "http://domain.com"
+  "dependencies": {
+    "serve": "latest"
   }
 }

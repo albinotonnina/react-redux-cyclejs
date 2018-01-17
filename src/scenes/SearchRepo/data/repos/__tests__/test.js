@@ -1,9 +1,8 @@
 import xs from 'xstream'
-import {assertSourcesSinks} from './helpers'
-// import * as ActionTypes from '../../ActionTypes'
-import * as actions from '../../actions'
+import {assertSourcesSinks} from '~/config/test.helpers'
+import * as actions from '../actions'
 
-import {fetchReposByUser, searchUsers} from '../'
+import {fetchReposByUser} from '../cycles'
 
 describe('Cycles', () => {
   describe('fetchReposByUser', () => {
@@ -12,8 +11,8 @@ describe('Cycles', () => {
       const user2 = 'luca'
 
       const actionSource = {
-        a: actions.requestReposByUser(user1),
-        b: actions.requestReposByUser(user2)
+        a: actions.requestReposByUser(user1, 1),
+        b: actions.requestReposByUser(user2, 2)
       }
 
       const httpSource = {
@@ -22,14 +21,14 @@ describe('Cycles', () => {
 
       const httpSink = {
         x: {
-          url: `https://api.github.com/users/${user1}/repos`,
+          url: `https://api.github.com/users/${user1}/repos?page=1`,
           category: 'users',
-          query: user1
+          github_user: user1
         },
         y: {
-          url: `https://api.github.com/users/${user2}/repos`,
+          url: `https://api.github.com/users/${user2}/repos?page=2`,
           category: 'users',
-          query: user2
+          github_user: user2
         }
       }
 
@@ -52,10 +51,10 @@ describe('Cycles', () => {
       const user1 = 'lmatteis'
       // const user2 = 'luca'
 
-      const response = {request: {query: user1}, body: {foo: 'bar'}}
+      const response = {request: {github_user: user1}, body: {foo: 'bar'}}
 
       const actionSource = {
-        a: actions.requestReposByUser(user1)
+        a: actions.requestReposByUser(user1, 1)
       }
 
       const httpSource = {
@@ -65,7 +64,7 @@ describe('Cycles', () => {
       }
 
       const actionSink = {
-        a: actions.receiveUserRepos(user1, response.body)
+        a: actions.receiveUserRepos(user1, response.body, 1, false)
       }
 
       assertSourcesSinks(
@@ -80,42 +79,34 @@ describe('Cycles', () => {
         done
       )
     })
-  })
 
-  describe('searchUsers', () => {
-    it('should emit HTTP requests given many debounced ACTIONs, and should emit ACTION given HTTP response', done => {
+    it('should emit ACTION with ERROR given HTTP response', done => {
+      const user1 = 'lmatteis'
+
       const actionSource = {
-        a: actions.searchUsers('l'),
-        b: actions.searchUsers('lu'),
-        c: actions.searchUsers('luc')
+        a: actions.requestReposByUser(user1, 1)
       }
+
       const httpSource = {
         select: () => ({
-          r: xs.of({body: {items: ['foo']}})
+          r: xs.of(new Error('Whoops'))
         })
       }
-      const httpSink = {
-        a: {
-          url: `https://api.github.com/search/users?q=luc`,
-          category: 'query'
-        }
-      }
+
       const actionSink = {
-        r: actions.receiveUsers(['foo'])
+        a: actions.receiveUserRepos(user1, 'Whoops', 1, true)
       }
 
       assertSourcesSinks(
         {
-          ACTION: {'-a-b-c----|': actionSource},
-          HTTP: {'---r------|': httpSource}
+          ACTION: {'a|': actionSource},
+          HTTP: {'r|': httpSource}
         },
         {
-          HTTP: {'---------a|': httpSink},
-          ACTION: {'---r------|': actionSink}
+          ACTION: {'a|': actionSink}
         },
-        searchUsers,
-        done,
-        {interval: 200}
+        fetchReposByUser,
+        done
       )
     })
   })

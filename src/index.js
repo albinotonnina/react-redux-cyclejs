@@ -7,8 +7,8 @@ import createHistory from 'history/createBrowserHistory'
 import {ConnectedRouter} from 'react-router-redux'
 
 import 'semantic-ui-css/semantic.min.css'
-import configureStore from './configureStore'
-import App from './containers/App'
+import configureStore from './state/configureStore'
+import App from './App'
 
 const history = createHistory()
 const store = configureStore(history)

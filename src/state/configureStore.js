@@ -1,14 +1,12 @@
 import {createStore, applyMiddleware, compose} from 'redux'
 import rootReducer from './reducers'
-
+import main from './cycles'
 import {routerMiddleware} from 'react-router-redux'
 
 import {createCycleMiddleware} from 'redux-cycles'
 import {run} from '@cycle/run'
 import {makeHTTPDriver} from '@cycle/http'
 import {timeDriver} from '@cycle/time'
-
-import main from './cycle'
 
 export default function configureStore(history) {
   // Build the middleware for intercepting and dispatching navigation actions
@@ -22,6 +20,7 @@ export default function configureStore(history) {
     composeEnhancers(applyMiddleware(cycleMiddleware), applyMiddleware(_routerMiddleware))
   )
 
+  // cycles
   run(main, {
     ACTION: makeActionDriver(),
     STATE: makeStateDriver(),
@@ -29,10 +28,10 @@ export default function configureStore(history) {
     HTTP: makeHTTPDriver()
   })
 
+  // hmr
   if (module.hot) {
-
     module.hot.accept('./reducers', () => {
-      const nextRootReducer = require('./reducers/index')
+      const nextRootReducer = require('./reducers')
       store.replaceReducer(nextRootReducer)
     })
   }

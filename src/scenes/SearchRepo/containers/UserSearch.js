@@ -3,7 +3,8 @@ import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
 import {Link} from 'react-router-dom'
 
-import {searchUsers} from '../actions'
+import {searchUsers} from '../data/users/actions'
+
 import {Search, Item} from 'semantic-ui-react'
 
 const resultRenderer = ({login, avatarurl, score}) => {
@@ -78,9 +79,9 @@ class UserSearch extends React.Component {
   }
 }
 
-const mapStateToProps = ({userResults, searchInFlight}) => ({
-  results: userResults,
-  searchInFlight
+const mapStateToProps = ({searchRepo, searchInFlight}) => ({
+  results: searchRepo.data.userResults,
+  searchInFlight: searchRepo.data.searchInFlight
 })
 
 const mapDispatchToProps = {searchUsers}

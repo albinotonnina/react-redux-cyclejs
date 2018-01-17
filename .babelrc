@@ -1,4 +1,4 @@
 {
   "presets": ["env", "react"],
-  "plugins": [["transform-class-properties", {"spec": true}], "dynamic-import-node"]
+  "plugins": [["transform-class-properties", {"spec": true}], "dynamic-import-node", "babel-plugin-root-import"]
 }
