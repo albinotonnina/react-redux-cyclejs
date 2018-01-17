@@ -11,8 +11,8 @@ describe('Cycles', () => {
       const user2 = 'luca'
 
       const actionSource = {
-        a: actions.requestReposByUser(user1, 1),
-        b: actions.requestReposByUser(user2, 2)
+        a: actions.requestReposByUser(user1, 1, 30),
+        b: actions.requestReposByUser(user2, 2, 30)
       }
 
       const httpSource = {
@@ -21,13 +21,13 @@ describe('Cycles', () => {
 
       const httpSink = {
         x: {
-          url: `https://api.github.com/users/${user1}/repos?page=1`,
-          category: 'users',
+          url: `https://api.github.com/users/${user1}/repos?page=1&per_page=30`,
+          category: 'repos',
           github_user: user1
         },
         y: {
-          url: `https://api.github.com/users/${user2}/repos?page=2`,
-          category: 'users',
+          url: `https://api.github.com/users/${user2}/repos?page=2&per_page=30`,
+          category: 'repos',
           github_user: user2
         }
       }
@@ -54,7 +54,7 @@ describe('Cycles', () => {
       const response = {request: {github_user: user1}, body: {foo: 'bar'}}
 
       const actionSource = {
-        a: actions.requestReposByUser(user1, 1)
+        a: actions.requestReposByUser(user1, 1, 30)
       }
 
       const httpSource = {
@@ -64,7 +64,7 @@ describe('Cycles', () => {
       }
 
       const actionSink = {
-        a: actions.receiveUserRepos(user1, response.body, 1, false)
+        a: actions.receiveUserRepos(user1, response.body, 1, false, 30)
       }
 
       assertSourcesSinks(
@@ -84,7 +84,7 @@ describe('Cycles', () => {
       const user1 = 'lmatteis'
 
       const actionSource = {
-        a: actions.requestReposByUser(user1, 1)
+        a: actions.requestReposByUser(user1, 1, 30)
       }
 
       const httpSource = {
@@ -94,7 +94,7 @@ describe('Cycles', () => {
       }
 
       const actionSink = {
-        a: actions.receiveUserRepos(user1, 'Whoops', 1, true)
+        a: actions.receiveUserRepos(user1, 'Whoops', 1, true, 30)
       }
 
       assertSourcesSinks(
