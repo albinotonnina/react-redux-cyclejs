@@ -1,25 +1,24 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import {connect} from 'react-redux'
-import {Link} from 'react-router'
+import {Link} from 'react-router-dom'
 
 import {searchUsers} from '../actions'
 import {Search, Item} from 'semantic-ui-react'
 
-const resultRenderer = ({login, avatarurl, score}) => (
-  <Link to={`/repos/${login}`}>
-    {' '}
-    <Item>
-      <Item.Image size="tiny" src={avatarurl} />
-
-      <Item.Content>
-        <Item.Header>{login}</Item.Header>
-
-        <Item.Meta>Score: {score}</Item.Meta>
-      </Item.Content>
-    </Item>
-  </Link>
-)
+const resultRenderer = ({login, avatarurl, score}) => {
+  return (
+    <Link to={`/repos/${login}`}>
+      <Item>
+        <Item.Image size="tiny" src={avatarurl} />
+        <Item.Content>
+          <Item.Header>{login}</Item.Header>
+          <Item.Meta>Score: {score}</Item.Meta>
+        </Item.Content>
+      </Item>
+    </Link>
+  )
+}
 
 class UserSearch extends React.Component {
   state = {
@@ -79,8 +78,7 @@ class UserSearch extends React.Component {
   }
 }
 
-const mapStateToProps = ({routing, userResults, searchInFlight}) => ({
-  query: routing.locationBeforeTransitions.query.q,
+const mapStateToProps = ({userResults, searchInFlight}) => ({
   results: userResults,
   searchInFlight
 })

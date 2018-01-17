@@ -1,21 +1,25 @@
 import {createStore, applyMiddleware, compose} from 'redux'
-import {browserHistory} from 'react-router'
-import {routerMiddleware} from 'react-router-redux'
 import rootReducer from './reducers'
-import main from './cycle'
+
+import {routerMiddleware} from 'react-router-redux'
+
 import {createCycleMiddleware} from 'redux-cycles'
 import {run} from '@cycle/run'
 import {makeHTTPDriver} from '@cycle/http'
 import {timeDriver} from '@cycle/time'
 
-export default function configureStore() {
+import main from './cycle'
+
+export default function configureStore(history) {
+  // Build the middleware for intercepting and dispatching navigation actions
+  const _routerMiddleware = routerMiddleware(history)
   const cycleMiddleware = createCycleMiddleware()
   const {makeActionDriver, makeStateDriver} = cycleMiddleware
 
   const composeEnhancers = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose
   const store = createStore(
     rootReducer,
-    composeEnhancers(applyMiddleware(cycleMiddleware, routerMiddleware(browserHistory)))
+    composeEnhancers(applyMiddleware(cycleMiddleware), applyMiddleware(_routerMiddleware))
   )
 
   run(main, {
@@ -26,7 +30,7 @@ export default function configureStore() {
   })
 
   if (module.hot) {
-    // Enable Webpack hot module replacement for reducers
+
     module.hot.accept('./reducers', () => {
       const nextRootReducer = require('./reducers/index')
       store.replaceReducer(nextRootReducer)

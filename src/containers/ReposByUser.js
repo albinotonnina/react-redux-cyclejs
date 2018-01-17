@@ -14,12 +14,12 @@ class ReposByUser extends React.Component {
   }
 
   componentDidMount() {
-    this.props.requestReposByUser(this.props.params.user)
+    this.props.requestReposByUser(this.props.user)
   }
 
   componentWillReceiveProps(nextProps) {
-    const {user} = this.props.params
-    if (user !== nextProps.params.user) {
+    const user = this.props.user
+    if (user !== nextProps.user) {
       this.props.requestReposByUser(user)
     }
   }
@@ -35,10 +35,12 @@ class ReposByUser extends React.Component {
   }
 }
 
-const mapStateToProps = ({reposByUser}, ownProps) => ({
-  reposByUser,
-  user: ownProps.params.user
-})
+const mapStateToProps = ({reposByUser}, ownProps) => {
+  return {
+    reposByUser,
+    user: ownProps.match.params.user
+  }
+}
 
 const mapDispatchToProps = {requestReposByUser, clearUserRepos}
 
