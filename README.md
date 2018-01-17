@@ -1,5 +1,8 @@
 # Declarative + reactive app using React, Redux, Cycle.js
 
+## Demo
+http://tholman.com/github-corners/
+
 ## Instructions
 
 `yarn` to install
