@@ -2,7 +2,7 @@
   "name": "rrce",
   "alias": "react-redux-cycles-exercise",
   "scripts": {
-    "start": "serve ."
+    "start": "serve . --single"
   },
   "dependencies": {
     "serve": "latest"
