@@ -1,7 +1,7 @@
 # Declarative + reactive app using React, Redux, Cycle.js
 
 ## Demo
-http://tholman.com/github-corners/
+http://react-redux-cycles-exercise.now.sh
 
 ## Instructions
 
